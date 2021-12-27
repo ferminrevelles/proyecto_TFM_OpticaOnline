@@ -1,0 +1,14 @@
+<!--Modal para finalizar compra o seguir llenando la cesta-->
+
+<div>
+    <h1 mat-dialog-title class="text-xl font-bold ">Gracias </h1>
+    <div mat-dialog-content class="bg-blue-200 text-lg px-2 my-2 ">
+    <p>El producto se ha añadido a la cesta</p>
+
+    </div>
+
+    <div mat-dialog-actions class="text-center">
+    <button  class="bg-gray-800 text-white px-2 py-2 mx-4 my-2 rounded-md text-lg" (click)="onNoClick()">Continuar comprando</button>
+    <button class="bg-green-600 text-white px-2 py-2 mx-4 my-2 rounded-md text-lg" (click)="summary()">Ir a la cesta</button>
+    </div>
+</div>

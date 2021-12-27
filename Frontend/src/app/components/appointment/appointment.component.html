@@ -1,0 +1,335 @@
+<app-header></app-header>
+
+
+<div class="text-lg lg:text-2xl mx-auto w-10/12 flex-auto md:flex md:justify-around bg-gray-200 my-3 h-auto">
+    <div *ngIf="selectCreateDay" class="w-full lg:w-1/2 text-center my-2 h-auto">
+        <div  class="mt-2 w-1/2 mx-auto">
+            <p class="bg-black text-yellow-300">Pedir cita:<br> Selecciona un día </p>
+        </div>
+        <div>
+            <mat-form-field class="py-2" appearance="fill">
+                <mat-label class="text-sm">Selecciona un día</mat-label>
+                <input matInput [matDatepickerFilter]="myFilter" [matDatepicker]="picker" [min]="minDate" [formControl]="day" (dateChange)="showHours()">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker touchUi #picker ></mat-datepicker>
+            </mat-form-field>
+        </div>
+        
+        <!--Formulario para solicitar cita y guardar en base de datos.-->
+        <div *ngIf="selectDay">
+            <form [formGroup]="createAppointment"  fxLayout="column" fxLayoutAlign="start stretch">
+                
+                <div class="form-group"> 
+                    <mat-form-field appearance="fill" class="w-full ">
+                    <mat-label>Nombre *</mat-label>
+                        <input matInput
+                        type="text"
+                        id="name"
+                        name="name"
+                        formControlName="name"
+                        class="form-control"
+                        [ngClass]="{
+                            'is-invalid': submitted && createAppointment.controls.name.errors
+                        }"
+                        />
+                        <mat-error *ngIf="createAppointment.controls.name.invalid">{{getErrorMessageName()}}</mat-error>
+                        <mat-hint>Introduce el nombre de usuario</mat-hint>
+                    </mat-form-field>
+                </div>    
+                
+                <div class="form-group">
+                    <mat-form-field class="w-full" appearance="fill">
+                    <mat-label>Email *</mat-label>
+                    <input matInput
+                        type="text"
+                        id="email"
+                        name="email"
+                        formControlName="email"
+                        class="form-control"
+                        [ngClass]="{
+                        'is-invalid': submitted && createAppointment.controls.email.errors
+                        }"
+                    />
+                    <mat-error *ngIf="createAppointment.controls.email.invalid">{{getErrorMessageEmail()}}</mat-error>
+                    <mat-hint>example@gmail.com</mat-hint>
+                    </mat-form-field>
+                </div>
+                
+                <div class="form-group">
+            
+                    <mat-form-field class="w-full" appearance="fill">
+                        <mat-label>Teléfono*</mat-label>
+                        <input matInput
+                        type="text"
+                        id="telf"
+                        name="telf"
+                        formControlName="telf"
+                        class="form-control"
+                        [ngClass]="{
+                            'is-invalid': submitted && createAppointment.controls.telf.errors
+                        }"
+                        />
+                        <mat-error *ngIf="createAppointment.controls.telf.invalid">{{getErrorMessageTelf()}}</mat-error>
+                        <mat-hint>Teléfono es requerido</mat-hint>
+                    </mat-form-field>
+                </div>
+
+                <div class=" form-group text-center mt-4">
+                    <button (click)="modal()" [disabled]="createAppointment.invalid || this.appointmentService.hourSelect==null" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-primary flex justify-center w-10/12 mx-auto px-10 py-3 mt-6 font-medium text-white uppercase bg-gray-800 rounded-full shadow item-center hover:bg-gray-700 focus:shadow-outline focus:outline-none">
+                        <svg aria-hidden="true" data-prefix="far" data-icon="credit-card" class="w-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M527.9 32H48.1C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48.1 48h479.8c26.6 0 48.1-21.5 48.1-48V80c0-26.5-21.5-48-48.1-48zM54.1 80h467.8c3.3 0 6 2.7 6 6v42H48.1V86c0-3.3 2.7-6 6-6zm467.8 352H54.1c-3.3 0-6-2.7-6-6V256h479.8v170c0 3.3-2.7 6-6 6zM192 332v40c0 6.6-5.4 12-12 12h-72c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h72c6.6 0 12 5.4 12 12zm192 0v40c0 6.6-5.4 12-12 12H236c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h136c6.6 0 12 5.4 12 12z"/></svg>
+                        <span class="ml-2 mt-5px">Pedir Cita</span>
+                    </button>
+                    <a routerLink="/" class="btn btn-link text-sm"
+                      >Volver</a>
+                </div>
+            </form>
+
+        </div>
+    </div>
+    <!--Spinner de espera-->
+    <div *ngIf="spinner">
+      <mat-spinner></mat-spinner>
+    </div>
+
+    <div *ngIf="selectDay" class="w-full lg:w-1/2 text-center my-2 h-auto">
+        <app-appointmenthours [daySelect]="selectDay"></app-appointmenthours>
+    </div>
+
+    <div *ngIf="selectDelDay" class="w-full lg:w-1/2 text-center my-2 h-auto">
+        <div  class="mt-2 w-1/2 mx-auto">
+            <p class="bg-black text-yellow-300">Anular cita:<br> Selecciona un día </p>
+        </div>
+        <div>
+            <mat-form-field class="py-2" appearance="fill">
+                <mat-label class="text-sm">Selecciona un día</mat-label>
+                <input matInput [matDatepickerFilter]="myFilter" [matDatepicker]="picker1" [min]="minDate" [formControl]="day" (dateChange)="showFormDel()">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker touchUi #picker1 ></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+        <!--Formulario para anular cita-->
+        <div *ngIf="selectDelDayHour">
+            <form [formGroup]="deleteAppointment" (ngSubmit)="onSubmitDelete(deleteAppointment.value)" fxLayout="column" fxLayoutAlign="start stretch">
+                
+                <div class="form-group"> 
+                    <mat-form-field appearance="fill">
+                        <mat-label>Hora a anular</mat-label>
+                        <mat-select id="delHour"
+                        name="delHour"
+                        formControlName="delHour"
+                        [ngClass]="{
+                            'is-invalid': submitted && deleteAppointment.controls.delHour.errors
+                        }">
+                          <mat-option *ngFor="let hours of hoursString" [value]="hours">
+                            {{hours}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>    
+                </div>
+                
+                <div class="form-group"> 
+                    <mat-form-field appearance="fill" class="w-full ">
+                    <mat-label>Nombre *</mat-label>
+                        <input matInput
+                        type="text"
+                        id="name"
+                        name="name"
+                        formControlName="name"
+                        class="form-control"
+                        [ngClass]="{
+                            'is-invalid': submitted && deleteAppointment.controls.name.errors
+                        }"
+                        />
+                        <mat-error *ngIf="deleteAppointment.controls.name.invalid">{{getErrorMessageName()}}</mat-error>
+                        <mat-hint>Introduce el nombre de usuario</mat-hint>
+                    </mat-form-field>
+                </div>    
+                
+                <div class="form-group">
+                    <mat-form-field class="w-full" appearance="fill">
+                    <mat-label>Email *</mat-label>
+                    <input matInput
+                        type="text"
+                        id="email"
+                        name="email"
+                        formControlName="email"
+                        class="form-control"
+                        [ngClass]="{
+                        'is-invalid': submitted && deleteAppointment.controls.email.errors
+                        }"
+                    />
+                    <mat-error *ngIf="deleteAppointment.controls.email.invalid">{{getErrorMessageEmail()}}</mat-error>
+                    <mat-hint>example@gmail.com</mat-hint>
+                    </mat-form-field>
+                </div>
+                
+                <div class="form-group">
+            
+                    <mat-form-field class="w-full" appearance="fill">
+                        <mat-label>Teléfono*</mat-label>
+                        <input matInput
+                        type="text"
+                        id="telf"
+                        name="telf"
+                        formControlName="telf"
+                        class="form-control"
+                        [ngClass]="{
+                            'is-invalid': submitted && deleteAppointment.controls.telf.errors
+                        }"
+                        />
+                        <mat-error *ngIf="deleteAppointment.controls.telf.invalid">{{getErrorMessageTelf()}}</mat-error>
+                        <mat-hint>Teléfono es requerido</mat-hint>
+                    </mat-form-field>
+                </div>
+
+                <div class=" form-group text-center mt-4">
+                    <button [disabled]="deleteAppointment.invalid" data-bs-toggle="modal" data-bs-target="#modalDeleteAppointment" class="btn btn-primary flex justify-center w-10/12 mx-auto px-10 py-3 mt-6 font-medium text-white uppercase bg-gray-800 rounded-full shadow item-center hover:bg-gray-700 focus:shadow-outline focus:outline-none">
+                        <svg aria-hidden="true" data-prefix="far" data-icon="credit-card" class="w-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M527.9 32H48.1C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48.1 48h479.8c26.6 0 48.1-21.5 48.1-48V80c0-26.5-21.5-48-48.1-48zM54.1 80h467.8c3.3 0 6 2.7 6 6v42H48.1V86c0-3.3 2.7-6 6-6zm467.8 352H54.1c-3.3 0-6-2.7-6-6V256h479.8v170c0 3.3-2.7 6-6 6zM192 332v40c0 6.6-5.4 12-12 12h-72c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h72c6.6 0 12 5.4 12 12zm192 0v40c0 6.6-5.4 12-12 12H236c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h136c6.6 0 12 5.4 12 12z"/></svg>
+                        <span class="ml-2 mt-5px">Anular Cita</span>
+                    </button>
+               
+                    <a routerLink="/" class="btn btn-link text-sm"
+                      >Volver</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+
+ <!-- Modal -->
+ <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <p class="modal-title lg:text-2xl" id="exampleModalLabel1">Confirmar Cita</p>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body lg:text-2xl">
+          <p class="font-bold">La cita es :</p>
+          <p class="bg-blue-700 text-white">Día: {{confirmDay | date : 'dd-MM-yyyy'}}</p>
+          <p class="bg-blue-700 text-white">Hora: {{confirmHour}}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary lg:text-2xl" data-bs-dismiss="modal">Volver</button>
+          <button data-bs-toggle="modal" data-bs-target="#modalCreateAppointment" type="button" class="btn btn-primary lg:text-2xl" data-bs-dismiss="modal" (click)="onSubmitCreate(createAppointment.value)">Confirmar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+   <!-- Modal Crear Cita de Usuario -->
+<div class="modal fade" id="modalCreateAppointment" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <p class="modal-title font-bold text-xl md:text-2xl bg-blue-400" id="exampleModalLabel2">Información creación de citas</p>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-xl md:text-2xl">
+          {{infoCreateAppointment}}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Borrar Cita de Usuario -->
+<div class="modal fade" id="modalDeleteAppointment" tabindex="-1" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <p class="modal-title font-bold text-xl md:text-2xl bg-blue-400" id="exampleModalLabel3">Información borrado de citas</p>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-xl md:text-2xl">
+          {{infoDeleteAppointment}}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<app-footer></app-footer>
+
+
+<!-- LICENSE TAILWINDCSS
+  MIT License
+
+Copyright (c) Adam Wathan <adam.wathan@gmail.com>
+Copyright (c) Jonathan Reinink <jonathan@reinink.ca>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+-->
+
+<!-- LICENSE ANGULAR MATERIAL
+  MIT License
+
+Copyright (c) Adam Wathan <adam.wathan@gmail.com>
+Copyright (c) Jonathan Reinink <jonathan@reinink.ca>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+-->
+
+<!-- LICENSE BOOTSTRAP
+    The MIT License (MIT)
+
+Copyright (c) 2011-2018 Twitter, Inc.
+Copyright (c) 2011-2018 The Bootstrap Authors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+-->

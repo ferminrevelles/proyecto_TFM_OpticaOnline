@@ -1,0 +1,163 @@
+<div fxLayout="column" fxFlexFill fxLayoutAlign="center center h-auto" style="background-image:url('../../assets/img/fondo_login.jpg');
+  height: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover; ">
+  <div class="pt-4 h-auto">
+    <img src="../../../assets/img/logo_optica.png" class="w-1/2 bg-black mx-auto" />
+  </div>
+    <div fxLayout="column" class="p-4 m-auto w-full text-xs md:text-base md:w-3/5">
+      <div class=" mat-elevation-z4">
+        <mat-card >
+            <mat-card-title class="bg-blue-500 text-white p-1 ">
+            Modificar Usuario: {{userModify.numOrder}}<br>
+            </mat-card-title> 
+            <mat-card-content>
+            <form [formGroup]="modifyUserForm" (ngSubmit)="onSubmit(modifyUserForm.value)" fxLayout="column" fxLayoutAlign="start stretch">
+                <!--  <div *ngIf="errorLogin" class="alert alert-danger">
+                <button type="button" class="close" data-dismiss="alert">
+                  &times;
+                </button>
+               
+                Los credenciales son incorrectos o el usuario no existe.
+              </div>
+                
+              
+                
+                <div class="md:flex md:justify-around w-full">
+                    <div class="form-group">
+                        <mat-form-field appearance="fill" class="w-full md:ml-10 md:w-8/12">
+                        <mat-label>Transportista *</mat-label>
+                            <mat-select 
+                            id="carrier" 
+                            name="carrier"
+                            formControlName="carrier"
+                            
+                            [ngClass]="{
+                                'is-invalid': submitted && modifyOrderForm.controls.carrier.errors
+                            }">
+                            <mat-option value="{{carrier}}" *ngFor="let carrier of carriers">{{carrier}}</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="modifyOrderForm.controls.carrier.invalid">{{getErrorMessageTypeCarrier()}}</mat-error>
+                            <mat-hint>Introduce el transportista</mat-hint>
+                        </mat-form-field>
+                    </div>
+                
+                    <div class="form-group form-check"> 
+                        <div class="w-full md:w-11/12 md:-ml-7">
+                        <mat-label>Estado envío</mat-label>
+                            <input 
+                            type="checkbox"
+                            id="send"
+                            name="send"
+                            formControlName="send"
+                            class="form-check-input"
+                            [ngClass]="{
+                                'is-invalid': submitted && modifyOrderForm.controls.send.errors
+                            }"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+               
+               
+                    <mat-nav-list>
+                        <mat-list-item *ngFor="let product of listProduct" class=" my-10">
+                            <mat-icon>remove</mat-icon><a class="mr-4 bg-gray-200 text-gray-800">Producto: {{ product.typeProduct }}, Modelo: {{product.model}}   </a>
+                            
+                                <div (click)="decrement(product)" class=" bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-7 w-10 rounded-l cursor-pointer outline-none">
+                                    <span class="m-auto text-2xl font-thin">−</span>
+                                </div>
+                                <p class="mx-1">{{product.quantity}}</p>
+                                <div (click)="increment(product)" class="bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-7 w-10 rounded-r cursor-pointer">
+                                    <span class="m-auto text-2xl font-thin">+</span>
+                                </div>
+                            
+                            <button mat-icon-button (click)="delListProduct(product)" class="ml-2"><mat-icon>delete</mat-icon></button>
+                        </mat-list-item>
+                    </mat-nav-list>
+               -->
+<!--               <div class="form-group">
+                <mat-form-field class="w-full" appearance="fill">
+                <mat-label>Email *</mat-label>
+                  <input matInput
+                    type="text"
+                    id="email"
+                    name="email"
+                    formControlName="email"
+                    class="form-control"
+                    [ngClass]="{
+                      'is-invalid': submitted && modifyUserForm.controls.email.errors
+                    }"
+                  />
+                  <mat-error *ngIf="modifyUserForm.controls.email.invalid">{{getErrorMessageEmail()}}</mat-error>
+                  <mat-hint>example@gmail.com</mat-hint>
+                </mat-form-field>
+                </div>-->
+
+                <div class="form-group">
+                <!--   <label for="password">Password</label>-->
+                <mat-form-field class="w-full" appearance="fill">
+                  <mat-label>Password*</mat-label>
+                  <input matInput
+                    type="password"
+                    id="pass"
+                    name="pass"
+                    formControlName="pass"
+                    class="form-control"
+                    [ngClass]="{
+                      'is-invalid': submitted && modifyUserForm.controls.pass.errors
+                    }"
+                  />
+                  <mat-error *ngIf="modifyUserForm.controls.pass.invalid">{{getErrorMessagePassword()}}</mat-error>
+                  <mat-hint>enter password is required</mat-hint>
+                </mat-form-field>
+                </div>
+                
+               <div class="form-group">
+                <mat-form-field class="w-full" appearance="fill">
+                    <mat-label>Nombre *</mat-label>
+                    <input matInput
+                    type="text"
+                    id="name"
+                    name="name"
+                    formControlName="name"
+                    class="form-control"
+                    [ngClass]="{
+                        'is-invalid': submitted && modifyUserForm.controls.name.errors
+                    }"
+                    />
+                    <mat-error *ngIf="modifyUserForm.controls.name.invalid">{{getErrorMessageName()}}</mat-error>
+                    <mat-hint>El nombre del usuario es requerido</mat-hint>
+                </mat-form-field>
+              </div>
+
+                <!-- Formulario para imagen-->
+                <input type="file" class="file-input hidden" (change)="onFileSelected($event)" #fileUpload>            
+                <div class="file-upload mt-4 bg-blue-500 mx-auto my-2 text-center font-bold text-base md:w-1/2">
+
+                    {{fileName || "Foto de perfil"}}
+
+                <a mat-mini-fab color="primary" class="upload-btn "
+                    (click)="fileUpload.click()">
+                    <mat-icon>attach_file</mat-icon>
+                </a>
+                </div>
+
+              <div class="form-group text-center mt-4">
+                <button [disabled]="modifyUserForm.invalid" class="btn btn-primary">
+                  Modificar
+                </button>
+                <a routerLink="/admin" class="btn btn-link text-sm">Volver</a>
+              </div>
+
+              
+            </form>
+
+            
+          </mat-card-content>        
+        </mat-card>
+      </div>
+    </div>
+  </div>

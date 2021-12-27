@@ -1,0 +1,133 @@
+
+<div class="flex flex-wrap w-full">
+  <section class="relative w-full">
+      <!-- navbar -->
+    <nav class="flex justify-between bg-gray-900 text-white w-full">
+      <div class="px-3 xl:px-12 py-6 flex w-full items-center">
+        <a class="text-5xl font-bold font-heading" href="https://frontend-optica-sancristobal.herokuapp.com/">
+          <img class="h-12 w-full" src="../../../assets/img/logo_optica1.png" alt="logo">
+          
+        </a>
+        <!-- Nav Links -->
+        <ul class="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12">
+          <li><a class="hover:text-gray-200" href="https://frontend-optica-sancristobal.herokuapp.com/">Inicio</a></li>
+          <li><a class="hover:text-gray-200" href="https://frontend-optica-sancristobal.herokuapp.com/weus">Nosotros</a></li>
+          <li><a class="hover:text-gray-200" href="https://frontend-optica-sancristobal.herokuapp.com/services">Servicios</a></li>
+          <li><a class="hover:text-gray-200" href="https://frontend-optica-sancristobal.herokuapp.com/contact">Contacto</a></li>
+          <li><a class="hover:text-gray-200" href="https://frontend-optica-sancristobal.herokuapp.com/appointment">Citas</a></li>
+          <li><a class="hover:text-gray-200" href="https://frontend-optica-sancristobal.herokuapp.com/shop">Tienda</a></li>
+        </ul>
+       
+          <!--Shop-->
+          <a class="md-max:hidden flex items-center mr-6 hover:text-gray-200" href="https://frontend-optica-sancristobal.herokuapp.com/summaryshop">
+            <mat-icon aria-hidden="false" aria-label="shopping_cart" matBadge="{{productCarry}}">shopping_cart</mat-icon>
+          </a>
+          <!-- Sign In / Register      -->
+          <a *ngIf="!userLogin" class="md-max:hidden flex items-center  hover:text-gray-200 mr-4" href="https://frontend-optica-sancristobal.herokuapp.com/login">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hover:text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+          </a>
+          <a *ngIf="userLogin" (click)="logout()" class="md-max:hidden flex items-center  hover:text-gray-200 mr-4" href="https://frontend-optica-sancristobal.herokuapp.com/">
+            <mat-icon aria-hidden="false" aria-label="logout">logout</mat-icon>
+          </a>
+        </div>
+
+      <!-- Responsive navbar -->
+      <a class="md:hidden flex mr-6 items-center" href="https://frontend-optica-sancristobal.herokuapp.com/summaryshop">
+        <mat-icon aria-hidden="false" aria-label="shopping_cart" matBadge="{{productService.numProductShop}}">shopping_cart</mat-icon>
+      </a>
+      <button class="md:hidden navbar-burger self-center mr-12 lg:hidden" [matMenuTriggerFor]="menu">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hover:text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      <mat-menu #menu="matMenu">
+        <a *ngIf="!userLogin" mat-menu-item href="https://frontend-optica-sancristobal.herokuapp.com/login">Login</a>
+        <a *ngIf="userLogin" (click)="logout()" mat-menu-item href="https://frontend-optica-sancristobal.herokuapp.com/">Logout</a>
+        <a mat-menu-item href="https://frontend-optica-sancristobal.herokuapp.com/">Inicio</a>
+        <a mat-menu-item href="https://frontend-optica-sancristobal.herokuapp.com/weus">Nosotros</a>
+        <a mat-menu-item href="https://frontend-optica-sancristobal.herokuapp.com/services">Servicios</a>
+        <a mat-menu-item href="https://frontend-optica-sancristobal.herokuapp.com/contact">Contacto</a>
+        <a mat-menu-item href="https://frontend-optica-sancristobal.herokuapp.com/appointment">Citas</a>
+        <a mat-menu-item href="https://frontend-optica-sancristobal.herokuapp.com/shop">Tienda</a>
+      </mat-menu>
+    </nav>
+    
+  </section>
+</div>
+
+<!-- LICENSE TAILWINDCSS
+  MIT License
+
+Copyright (c) Adam Wathan <adam.wathan@gmail.com>
+Copyright (c) Jonathan Reinink <jonathan@reinink.ca>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+-->
+
+<!-- LICENSE ANGULAR MATERIAL
+  MIT License
+
+Copyright (c) Adam Wathan <adam.wathan@gmail.com>
+Copyright (c) Jonathan Reinink <jonathan@reinink.ca>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+-->
+
+<!-- LICENSE BOOTSTRAP
+    The MIT License (MIT)
+
+Copyright (c) 2011-2018 Twitter, Inc.
+Copyright (c) 2011-2018 The Bootstrap Authors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+-->

@@ -1,0 +1,99 @@
+<div fxLayout="column" fxFlexFill fxLayoutAlign="center center h-auto" style="background-image:url('../../assets/img/fondo_login.jpg');
+  height: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover; ">
+  <div class="pt-4 h-auto">
+    <img src="../../../assets/img/logo_optica.png" class="w-1/2 bg-black mx-auto" />
+  </div>
+    <div fxLayout="column" class="p-4 m-auto w-full text-xs md:text-base md:w-3/5">
+      <div class=" mat-elevation-z4">
+        <mat-card >
+            <mat-card-title class="bg-blue-500 text-white p-1 ">
+            Modificar Pedido Número: {{orderModify.numOrder}}<br>
+            <span class="mt-4">Usuario: {{orderModify.user.email}}</span>
+            </mat-card-title> 
+            <mat-card-content>
+            <form [formGroup]="modifyOrderForm" (ngSubmit)="onSubmit(modifyOrderForm.value)" fxLayout="column" fxLayoutAlign="start stretch">
+                <!--  <div *ngIf="errorLogin" class="alert alert-danger">
+                <button type="button" class="close" data-dismiss="alert">
+                  &times;
+                </button>
+               
+                Los credenciales son incorrectos o el usuario no existe.
+              </div>
+                -->
+                
+                <div class="md:flex md:justify-around w-full">
+                    <div class="form-group">
+                        <mat-form-field appearance="fill" class="w-full md:ml-10 md:w-8/12">
+                        <mat-label>Transportista *</mat-label>
+                            <mat-select 
+                            id="carrier" 
+                            name="carrier"
+                            formControlName="carrier"
+                            
+                            [ngClass]="{
+                                'is-invalid': submitted && modifyOrderForm.controls.carrier.errors
+                            }">
+                            <mat-option value="{{carrier}}" *ngFor="let carrier of carriers">{{carrier}}</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="modifyOrderForm.controls.carrier.invalid">{{getErrorMessageTypeCarrier()}}</mat-error>
+                            <mat-hint>Introduce el transportista</mat-hint>
+                        </mat-form-field>
+                    </div>
+                
+                    <div class="form-group form-check"> 
+                        <div class="w-full md:w-11/12 md:-ml-7">
+                        <mat-label>Estado envío</mat-label>
+                            <input 
+                            type="checkbox"
+                            id="send"
+                            name="send"
+                            formControlName="send"
+                            class="form-check-input"
+                            [ngClass]="{
+                                'is-invalid': submitted && modifyOrderForm.controls.send.errors
+                            }"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+               
+               
+                    <mat-nav-list>
+                        <mat-list-item *ngFor="let product of listProduct" class=" my-10">
+                            <mat-icon>remove</mat-icon><a class="mr-4 bg-gray-200 text-gray-800">Producto: {{ product.typeProduct }}, Modelo: {{product.model}}   </a>
+                            
+                                <div (click)="decrement(product)" class=" bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-7 w-10 rounded-l cursor-pointer outline-none">
+                                    <span class="m-auto text-2xl font-thin">−</span>
+                                </div>
+                                <p class="mx-1">{{product.quantity}}</p>
+                                <div (click)="increment(product)" class="bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-7 w-10 rounded-r cursor-pointer">
+                                    <span class="m-auto text-2xl font-thin">+</span>
+                                </div>
+                            
+                            <button mat-icon-button (click)="delListProduct(product)" class="ml-2"><mat-icon>delete</mat-icon></button>
+                        </mat-list-item>
+                    </mat-nav-list>
+               
+               
+
+              <div class="form-group text-center mt-4">
+                <button [disabled]="modifyOrderForm.invalid" class="btn btn-primary">
+                  Modificar
+                </button>
+                <a routerLink="/admin" class="btn btn-link text-sm"
+                  >Volver</a>
+              </div>
+
+              
+            </form>
+
+            
+          </mat-card-content>        
+        </mat-card>
+      </div>
+    </div>
+  </div>

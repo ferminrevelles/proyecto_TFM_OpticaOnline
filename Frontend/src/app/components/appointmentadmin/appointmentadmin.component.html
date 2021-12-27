@@ -1,0 +1,132 @@
+      <!--Appointment Table-->
+          <!-- component -->
+        <div class="text-center md:text-2xl">
+          <div class="mx-auto">
+            <mat-form-field appearance="fill">
+                <mat-label>Elige un día</mat-label>
+                <input matInput [matDatepicker]="picker"  [formControl]="day" (dateChange)="showAppointmentDay()">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+          </div>
+          <div *ngIf="!thereIsDate">
+              <div class="flex justify-center relative top-1/3 md:text-3xl">
+                <!-- This is an example component -->
+                <div class="relative grid grid-cols-1 gap-4 p-4 mb-8 border rounded-lg bg-white shadow-lg">
+                    <div class="relative flex gap-4">
+                        <mat-icon aria-hidden="false" class="relative rounded-lg -top-8 -mb-4 bg-white border">event</mat-icon>
+                        <div class="flex flex-col w-full">
+                            <div class="flex flex-row justify-between">
+                                <p class="relative text-xl md:text-3xl whitespace-nowrap truncate overflow-hidden">Notificación</p>
+                                <a class="text-gray-500 text-xl" href="#"><i class="fa-solid fa-trash"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="-mt-4 text-gray-500">No hay citas para la fecha {{day.value | date: 'dd-MM-yyyy'}}</p>
+                  </div>
+                </div>
+          </div>
+          <div *ngIf="thereIsDate" class="w-full overflow-hidden rounded-lg shadow-xs">
+            <div class="w-full overflow-x-auto">  
+              <table class="md:mx-auto min-w-full border-collapse block md:table ">
+                <thead class="block  md:table-header-group">
+                  <tr class="border border-grey-500 md:border-none block md:table-row absolute -top-full md:top-auto -left-full md:left-auto  md:relative ">
+                    <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell w-1/5">Hora</th>
+                    <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell w-1/5">Nombre</th>
+                    <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell w-1/5">Correo</th>
+                    <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell w-1/5">Teléfono</th>
+                    <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell text-center w-1/5">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody class="block md:table-row-group">
+                  <tr *ngFor="let appointments of appointmentDaySelect.dataAppointment.hourAndUser" class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
+                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/5 md:hidden font-bold">Hora</span><span class="ml-4">{{hoursString[appointments.hour-1]}}</span></td>
+                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/5 md:hidden font-bold">Nombre</span><span class="ml-4">{{appointments.user.name}}</span></td>
+                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/5 md:hidden font-bold">Correo</span><span class="ml-4">{{appointments.user.email}}</span></td>
+                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/5 md:hidden font-bold">Teléfono</span><span class="ml-4">{{appointments.user.telf}}</span></td>
+                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell text-center">
+                      <span class="inline-block w-1/3 md:hidden font-bold">Acciones</span>
+                      <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 border border-red-500 rounded " (click)="deleteAppointment(appointments)" ><mat-icon aria-hidden="false" aria-label="Example home icon">delete</mat-icon></button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- LICENSE TAILWINDCSS
+ MIT License
+
+Copyright (c) Adam Wathan <adam.wathan@gmail.com>
+Copyright (c) Jonathan Reinink <jonathan@reinink.ca>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+-->
+
+<!-- LICENSE ANGULAR MATERIAL
+  MIT License
+
+Copyright (c) Adam Wathan <adam.wathan@gmail.com>
+Copyright (c) Jonathan Reinink <jonathan@reinink.ca>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+-->
+
+<!-- LICENSE BOOTSTRAP
+    The MIT License (MIT)
+
+Copyright (c) 2011-2018 Twitter, Inc.
+Copyright (c) 2011-2018 The Bootstrap Authors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+-->

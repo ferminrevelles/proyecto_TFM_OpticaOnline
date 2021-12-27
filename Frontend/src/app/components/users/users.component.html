@@ -1,0 +1,166 @@
+<!-- Client Table -->
+<div class="mt-4 mx-4">
+    <div class="w-full overflow-hidden rounded-lg shadow-xs">
+      <div class="w-full overflow-x-auto">
+        <table class="w-full pl-8 mx-auto min-w-full border-collapse block table ">
+          <thead class="  md:table-header-group">
+            <tr class="md:hiddentext-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+              <th class="px-4 py-3 hidden  lg:table-cell">Cliente</th>
+              <th class="px-4 py-3 hidden  lg:table-cell">Cuenta</th>
+              <th class="px-4 py-3 hidden  lg:table-cell">Nombre</th>
+              <th class="px-4 py-3 hidden  lg:table-cell">Fecha de Alta</th>
+              <th class="px-4 py-3 hidden  lg:table-cell">Acciones</th>
+            </tr>
+          </thead>
+          <tbody class="  bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+            <tr *ngFor="let user of listUsers" class="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400">
+              <td class="px-4 py-3 block lg:table-cell text-center flex justify-center">
+                <div class="flex items-center text-sm">
+                  <div class="relative w-8 h-8 mr-3 rounded-full md:block">
+                    <img class="object-cover w-full h-full rounded-full" src="{{user.imgUrlUser}}" alt="" loading="lazy" />
+                    <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
+                  </div>
+                  <div>
+                    <p class="font-semibold">{{user.name}}</p>
+                    <p class="text-xs text-gray-600 dark:text-gray-400">Tipo: {{user.typeUser}}</p>
+                  </div>
+                </div>
+              </td>
+              <td class="px-4 py-3 text-sm block lg:table-cell">{{user.email}}</td>
+              <td class="px-4 py-3 text-xs block lg:table-cell">
+                <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100"> {{user.name}} </span>
+              </td>
+              <td class="px-4 py-3 text-sm block lg:table-cell">{{user.createdAt |date: 'dd-MM-yyyy'}}</td>
+              <td class="block lg:table-cellp-2 lg:border lg:border-grey-500 text-left block lg:table-cell text-center">
+                <span class="inline-block w-32 lg:hidden font-bold">Acciones</span>
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 border border-blue-500 rounded mr-3" (click)="modifyUser(user)" ><mat-icon aria-hidden="false" aria-label="Example home icon">edit</mat-icon></button>
+                <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 border border-red-500 rounded " (click)="deleteUser(user.email)" ><mat-icon aria-hidden="false" aria-label="Example home icon">delete</mat-icon></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+<!--      <div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
+        <span class="flex items-center col-span-3"> Showing 21-30 of 100 </span>
+        <span class="col-span-2"></span>-->
+        <!-- Pagination -->
+<!--        <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
+          <nav aria-label="Table navigation">
+            <ul class="inline-flex items-center">
+              <li>
+                <button class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple" aria-label="Previous">
+                  <svg aria-hidden="true" class="w-4 h-4 fill-current" viewBox="0 0 20 20">
+                    <path d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" fill-rule="evenodd"></path>
+                  </svg>
+                </button>
+              </li>
+              <li>
+                <button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">1</button>
+              </li>
+              <li>
+                <button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">2</button>
+              </li>
+              <li>
+                <button class="px-3 py-1 text-white dark:text-gray-800 transition-colors duration-150 bg-blue-600 dark:bg-gray-100 border border-r-0 border-blue-600 dark:border-gray-100 rounded-md focus:outline-none focus:shadow-outline-purple">3</button>
+              </li>
+              <li>
+                <button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">4</button>
+              </li>
+              <li>
+                <span class="px-3 py-1">...</span>
+              </li>
+              <li>
+                <button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">8</button>
+              </li>
+              <li>
+                <button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">9</button>
+              </li>
+              <li>
+                <button class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple" aria-label="Next">
+                  <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
+                    <path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" fill-rule="evenodd"></path>
+                  </svg>
+                </button>
+              </li>
+            </ul>
+          </nav>
+        </span>
+      </div>-->
+    </div>
+  </div>
+  <!-- ./Client Table -->
+
+  <!-- LICENSE TAILWINDCSS
+  MIT License
+
+Copyright (c) Adam Wathan <adam.wathan@gmail.com>
+Copyright (c) Jonathan Reinink <jonathan@reinink.ca>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+-->
+
+<!-- LICENSE ANGULAR MATERIAL
+  MIT License
+
+Copyright (c) Adam Wathan <adam.wathan@gmail.com>
+Copyright (c) Jonathan Reinink <jonathan@reinink.ca>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+-->
+
+<!-- LICENSE BOOTSTRAP
+    The MIT License (MIT)
+
+Copyright (c) 2011-2018 Twitter, Inc.
+Copyright (c) 2011-2018 The Bootstrap Authors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+-->
